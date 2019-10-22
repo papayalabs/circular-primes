@@ -13,6 +13,7 @@
     });
     $('input#number').keyup(function() {
       console.log('key pressed')
+      this.value = this.value.replace(/[^0-9\.]/g,'');
       $.post($('#calculate').attr('action'), $('#calculate').serialize(), null, 'script');
       return false;
     });	
