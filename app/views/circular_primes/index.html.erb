@@ -1,0 +1,28 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $('#calculating').hide();  // hide it initially.
+    $(document)  
+      .ajaxStart(function() {
+        $('#calculating').show(); // show on any Ajax event.
+        $('#result').hide();
+      })
+      .ajaxStop(function() {
+        $('#calculating').hide(); // hide it when it is done.
+        $('#result').show();
+    });
+    $('input#number').keyup(function() {
+      console.log('key pressed')
+      $.post($('#calculate').attr('action'), $('#calculate').serialize(), null, 'script');
+      return false;
+    });	
+});
+</script>
+<h1>Circular Primes</h1>
+<p>Input a number(X) in a form and get the list of circular prime numbers between 1 and that number(X) in return</p>
+<%= form_tag(calculate_path, :id => "calculate", remote: true) do %>
+    Number: <%= text_field_tag :number %>
+    <%= submit_tag 'Calculate' %>
+<% end %>
+<div id="calculating"><h1>Calculating...</h1></div>
+<div id="result"><%= render 'result' %></div>
